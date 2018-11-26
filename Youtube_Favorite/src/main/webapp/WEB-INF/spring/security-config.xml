@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+	
+	<http use-expressions="true"> <!-- access에 hasAnyRole 표현식 사용가능하게 하는것 -->
+		<!-- 모든사용자가 접근가능 -->
+		
+		<!-- <intercept-url pattern="/user/loginForm" access="permitAll" />
+		<intercept-url pattern="/board/list" access="permitAll" /> -->
+		
+		<!-- in Memory 방식 -->
+		<intercept-url pattern="/admin/loginForm" access="permitAll" />
+		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADM')" />
+		<!-- user 혹은 admin 이어야만 access 가능, /**은 모든 경로에 사용.(/*은 1개의 depth 까지만 적용) -->
+		<intercept-url pattern="/client/**" access="permitAll" />
+		
+		
+		<!-- 
+		<form-login/> 이렇게 하면 자동으로 spring이 로그인 페이지를 만들어줌 , default값
+		앞에 무조건 /를 붙여줘야함.
+		default-target-url = 로그인 성공시 타겟
+		failure-url = 실패시 타겟, error 파라미터로 넘김
+		 -->
+		<form-login login-page="/admin/loginForm" 
+			default-target-url="/admin/main" 
+			authentication-failure-url="/admin/loginForm?error=1" 
+			username-parameter="username" 
+			password-parameter="password" /> 
+		<!-- 로그아웃시 success-url로 이동 -->
+		<logout logout-url="/logout" logout-success-url="/admin/loginForm" />
+		<!-- 권한이 없을경우 에러페이지로 이동-->
+		<access-denied-handler error-page="/admin/accessDenied" />
+		<!-- false가 되면 post방식때 한 키값을 계속 보내줘야함 -->
+		<csrf disabled="true"/>
+	</http> 
+	
+	<!-- provider, memory에 계속 올라가있기 때문에 in memory 방식임, 값을 변경하려면 서버를 restart 해야한다. --> 
+	<authentication-manager> 
+		<authentication-provider>
+			<user-service>
+				<user name="admin" password="1234" authorities="ROLE_ADM" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	
+</beans:beans>

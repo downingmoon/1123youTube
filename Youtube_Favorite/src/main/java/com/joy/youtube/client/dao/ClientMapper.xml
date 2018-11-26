@@ -6,6 +6,4 @@
 	<select id="getList" resultType="com.joy.youtube.model.YoutubeVO">
 		SELECT * FROM yf_youtube
 	</select>
-
-
 </mapper>
