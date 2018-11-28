@@ -27,6 +27,8 @@
 			<input type="password" id="password" name="password" />
 		</p>
 		<button type="submit" class="btn">로그인</button>
+		<a href="join"><button type="button">회원가입</button></a>
 	</form:form>
+	
 </body>
 </html>

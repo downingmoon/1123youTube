@@ -12,5 +12,9 @@ MAIN
 <form:form action="${pageContext.request.contextPath}/logout" method="POST">
 	<input type="submit" value="로그아웃"/>
 </form:form>
+
+<a href="insertURL">URL 등록</a>
+<a href="${pageContext.request.contextPath}/client/list">리스트 보기</a>
+
 </body>
 </html>

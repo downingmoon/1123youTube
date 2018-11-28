@@ -4,6 +4,16 @@ public class YoutubeVO {
 
 	private int y_no;
 	private String y_url;
+	private String y_title;
+
+	public String getY_title() {
+		return y_title;
+	}
+
+	public void setY_title(String y_title) {
+		this.y_title = y_title;
+	}
+
 	private String y_regdate;
 
 	public int getY_no() {

@@ -17,4 +17,8 @@ public class ClientService {
 	public List<YoutubeVO> getList() {
 		return mapper.getList();
 	}
+	
+	public YoutubeVO getVideoDetail(int y_no) {
+		return mapper.getVideoDetail(y_no);
+	}
 }

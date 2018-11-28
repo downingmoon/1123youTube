@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.joy.youtube.admin.dao.AdminMapper">
+	<insert id="join" parameterType="UserVO">
+		INSERT INTO yf_user
+		(u_no, u_id, u_pw, u_name, u_auth)
+		VALUES
+		(seq_yf_user.nextval, #{u_id}, #{u_pw}, #{u_name}, #{u_auth})
+	</insert>
+	
+	<insert id="insertURL" parameterType="YoutubeVO">
+		INSERT INTO YF_YOUTUBE
+		(y_no, y_url, y_title)
+		VALUES
+		(SEQ_YF_YOUTUBE.NEXTVAL, #{y_url}, #{y_title})
+	</insert>
+	
+	<delete id="deleteVideo">
+		DELETE FROM YF_YOUTUBE
+		WHERE Y_NO = #{y_no}
+	</delete>
+	
+</mapper>

@@ -4,6 +4,10 @@
 
 <mapper namespace="com.joy.youtube.client.dao.ClientMapper">
 	<select id="getList" resultType="com.joy.youtube.model.YoutubeVO">
-		SELECT * FROM yf_youtube
+		SELECT * FROM yf_youtube order by y_no
+	</select>
+	
+	<select id="getVideoDetail" resultType="com.joy.youtube.model.YoutubeVO">
+		SELECT y_url, y_title FROM yf_youtube WHERE y_no = #{y_no}
 	</select>
 </mapper>

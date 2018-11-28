@@ -5,6 +5,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 	
+	<beans:bean id="bcryptPasswordEncoder"
+			class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+	
 	<http use-expressions="true"> <!-- access에 hasAnyRole 표현식 사용가능하게 하는것 -->
 		<!-- 모든사용자가 접근가능 -->
 		
@@ -12,7 +16,9 @@
 		<intercept-url pattern="/board/list" access="permitAll" /> -->
 		
 		<!-- in Memory 방식 -->
+		<intercept-url pattern="/admin/join" access="permitAll" />
 		<intercept-url pattern="/admin/loginForm" access="permitAll" />
+		<intercept-url pattern="/admin/insertURL" access="permitAll" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADM')" />
 		<!-- user 혹은 admin 이어야만 access 가능, /**은 모든 경로에 사용.(/*은 1개의 depth 까지만 적용) -->
 		<intercept-url pattern="/client/**" access="permitAll" />
@@ -40,9 +46,22 @@
 	<!-- provider, memory에 계속 올라가있기 때문에 in memory 방식임, 값을 변경하려면 서버를 restart 해야한다. --> 
 	<authentication-manager> 
 		<authentication-provider>
-			<user-service>
-				<user name="admin" password="1234" authorities="ROLE_ADM" />
-			</user-service>
+			<jdbc-user-service
+				data-source-ref="dataSource"
+				role-prefix="ROLE_"
+				users-by-username-query=
+				"select
+					u_id as username,
+					u_pw as password,
+					1 as enabled
+				from yf_user where u_id = ?"
+				authorities-by-username-query=
+				"select
+					u_id as username,
+					u_auth as authority
+				from yf_user where u_id = ?"
+				/>
+				<password-encoder hash="bcrypt"/>
 		</authentication-provider>
 	</authentication-manager>
 	
