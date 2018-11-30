@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.joy.youtube.model.GallaryVO;
 import com.joy.youtube.model.UserVO;
 import com.joy.youtube.model.YoutubeVO;
 
@@ -62,5 +63,22 @@ public class AdminController {
 		service.deleteVideo(y_no);
 		System.out.println("DELETE VIDEO COMPLETE");
 		return "redirect:/client/list";
+	}
+	
+	@RequestMapping("insertGallary")
+	public String insertGallaryGet() {
+		return "admin/insertGallary";
+	}
+	@RequestMapping(value="insertGallary", method=RequestMethod.POST)
+	public String insertGallaryPost(GallaryVO vo) {
+		System.out.println("title : " + vo.getTitle());
+		System.out.println("file : " + vo.getImg());
+		service.insertGallary(vo);
+		return "admin/insertGallary";
+	}
+	
+	@RequestMapping("gallaryList")
+	public String gallaryList() {
+		return "admin/gallaryList";
 	}
 }
