@@ -13,10 +13,9 @@
 	<h3>아이디 / 비밀번호를 입력하세요.</h3>
 
 	<c:url value="/login" var="loginUrl" />
-	${loginUrl}
 	<form:form name="f" action="${loginUrl}" method="POST">
 		<c:if test="${param.error != null}">
-			<p>아이디와 비밀번호가 잘못됐습니다.</p>
+			<p>아이디/비밀번호가 잘못됐습니다.</p>
 		</c:if>
 		<p>
 			<label for="username">아이디</label>

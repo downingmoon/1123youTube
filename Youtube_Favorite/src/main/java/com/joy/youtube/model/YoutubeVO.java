@@ -5,6 +5,15 @@ public class YoutubeVO {
 	private int y_no;
 	private String y_url;
 	private String y_title;
+	private String y_chname;
+
+	public String getY_chname() {
+		return y_chname;
+	}
+
+	public void setY_chname(String y_chname) {
+		this.y_chname = y_chname;
+	}
 
 	public String getY_title() {
 		return y_title;

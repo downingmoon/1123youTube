@@ -7,6 +7,24 @@ public class UserVO {
 	private String u_pw;
 	private String u_name;
 	private String u_auth;
+	private String u_email;
+	private String u_nickname;
+
+	public String getU_email() {
+		return u_email;
+	}
+
+	public void setU_email(String u_email) {
+		this.u_email = u_email;
+	}
+
+	public String getU_nickname() {
+		return u_nickname;
+	}
+
+	public void setU_nickname(String u_nickname) {
+		this.u_nickname = u_nickname;
+	}
 
 	public int getU_no() {
 		return u_no;

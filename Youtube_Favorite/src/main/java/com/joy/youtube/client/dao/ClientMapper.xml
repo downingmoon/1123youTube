@@ -3,11 +3,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.joy.youtube.client.dao.ClientMapper">
-	<select id="getList" resultType="com.joy.youtube.model.YoutubeVO">
+	<select id="getList" resultType="YoutubeVO">
 		SELECT * FROM yf_youtube order by y_no
 	</select>
 	
-	<select id="getVideoDetail" resultType="com.joy.youtube.model.YoutubeVO">
+	<select id="getVideoDetail" resultType="YoutubeVO">
 		SELECT y_url, y_title FROM yf_youtube WHERE y_no = #{y_no}
 	</select>
+	
+	<insert id="insertURL" parameterType="YoutubeVO">
+		INSERT INTO YF_YOUTUBE
+		(y_url, y_title, y_chname)
+		VALUES
+		(#{y_url}, #{y_title}, #{y_chname})
+	</insert>
+	
+	<insert id="join" parameterType="UserVO">
+		INSERT INTO yf_user
+		(u_id, u_pw, u_name, u_auth, u_email, u_nickname)
+		VALUES
+		(#{u_id}, #{u_pw}, #{u_name}, #{u_auth}, #{u_email}, #{u_nickname})
+	</insert>
 </mapper>

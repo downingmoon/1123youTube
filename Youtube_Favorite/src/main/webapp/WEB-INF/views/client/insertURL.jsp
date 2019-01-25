@@ -9,12 +9,11 @@
 </head>
 <body>
 
-	<form:form id="frm" onsubmit="return beforeSend()">
-		<p>
-			<label for="y_url">URL : </label> 
-			<input type="text" name="y_url" id="y_url"> 
+	<form:form id="frm" onsubmit="return beforeSend()"> 
+			<input class="form-control" type="text" name="y_url" id="y_url" placeholder="Insert URL"> 
 			<input type="hidden" name="y_title" id="y_title">
-			<input type="submit" value="URL등록">
+			<input type="hidden" name="y_chname" id="y_chname">
+			<input class="btn btn-default" type="submit" value="URL등록">
 	</form:form>
 	
 <script>
@@ -34,7 +33,10 @@
 							//parsing을 하면 String이 자바스크립트 객체가 됨(같은모양)
 				if(obj.items[0] != undefined) {
 					var y_title = document.getElementById("y_title");
+					var y_chname = document.getElementById("y_chname");
 					y_title.value = obj.items[0].snippet.title;
+					y_chname.value = obj.items[0].snippet.channelTitle;
+					
 					frm.submit();
 				}
 			}

@@ -25,6 +25,14 @@
 			<input type="text" id="u_name" name="u_name" value="문다운"/>
 		</p>
 		<p>
+			<label for="u_email">이메일</label>
+			<input type="text" id="u_email" name="u_email" value="4joy97@naver.com"/>
+		</p>
+		<p>
+			<label for="u_nickname">닉네임</label>
+			<input type="text" id="u_nickname" name="u_nickname" value="FallingMoon"/>
+		</p>
+		<p>
 			<label for="u_auth">권한</label>
 			<input type="text" id="u_auth" name="u_auth" value="USER"/>
 		</p>

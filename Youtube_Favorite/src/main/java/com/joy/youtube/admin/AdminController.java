@@ -16,65 +16,10 @@ public class AdminController {
 	@Autowired
 	private AdminService service;
 
-	@RequestMapping("loginForm")
-	public String loginForm() {
-		return "admin/loginForm";
-	}
-	
-	@RequestMapping("main")
-	public String main() {
-		return "admin/main";
-	}
-	
-	@RequestMapping("accessDenied")
-	public String accessDenied() {
-		return "admin/accessDenied";
-	}
-	
-
-	@RequestMapping("join")
-	public String joinGet() {
-		return "admin/joinForm";
-	}
-	
-	@RequestMapping(value="join", method=RequestMethod.POST)
-	public String joinPost(UserVO vo) {
-		System.out.println("joinPost / name : " + vo.getU_name());
-		service.join(vo);
-		return "redirect:loginForm";
-		
-	}
-	
-	@RequestMapping("insertURL")
-	public String insertURLGet() {
-		return "admin/insertURL";
-	}
-	@RequestMapping(value="insertURL", method=RequestMethod.POST)
-	public String insertURLPost(YoutubeVO vo) {
-		//TODO : insert 수행
-		System.out.println("insertURLpost / URL : " + vo.getY_url());
-		System.out.println("insertURLpost / TITLE : " + vo.getY_title());
-		service.insertURL(vo);
-		return "redirect:/client/list";
-	}
-	
 	@RequestMapping("deleteVideo")
 	public String deleteVideoGet(int y_no) {
 		service.deleteVideo(y_no);
-		System.out.println("DELETE VIDEO COMPLETE");
 		return "redirect:/client/list";
-	}
-	
-	@RequestMapping("insertGallary")
-	public String insertGallaryGet() {
-		return "admin/insertGallary";
-	}
-	@RequestMapping(value="insertGallary", method=RequestMethod.POST)
-	public String insertGallaryPost(GallaryVO vo) {
-		System.out.println("title : " + vo.getTitle());
-		System.out.println("file : " + vo.getImg());
-		service.insertGallary(vo);
-		return "admin/insertGallary";
 	}
 	
 	@RequestMapping("gallaryList")
