@@ -4,7 +4,11 @@
 
 <mapper namespace="com.joy.youtube.client.dao.ClientMapper">
 	<select id="getList" resultType="YoutubeVO">
-		SELECT * FROM yf_youtube order by y_no
+		SELECT * FROM yf_youtube order by y_no DESC LIMIT 3
+	</select>
+	
+	<select id="getMoreVideo" resultType="YoutubeVO">
+		SELECT * FROM yf_youtube ORDER BY y_no DESC LIMIT #{page}, 1
 	</select>
 	
 	<select id="getVideoDetail" resultType="YoutubeVO">

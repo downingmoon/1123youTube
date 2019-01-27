@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.joy.youtube.model.GallaryVO;
@@ -28,9 +29,9 @@ public class ClientController {
 	
 	@RequestMapping("getMoreVideoAjax")
 	@ResponseBody
-	public List<YoutubeVO> getMoreVideoAjax() {
-		List<YoutubeVO> list = service.getList();
-		//LIMIT 사용, paging 하듯 가져오기
+	public List<YoutubeVO> getMoreVideoAjax(int page) {
+		System.out.println("page : " + page );
+		List<YoutubeVO> list = service.getMoreVideo(page);
 		return list;
 	}
 	
@@ -71,12 +72,6 @@ public class ClientController {
 	public String insertGallaryPost(GallaryVO vo) {
 		service.insertGallary(vo);
 		return "admin/insertGallary";
-	}
-	
-	@RequestMapping("login")
-	public String loginForm(Model m) {
-		m.addAttribute("target","login/loginForm");
-		return "template";
 	}
 	
 	@RequestMapping("join")

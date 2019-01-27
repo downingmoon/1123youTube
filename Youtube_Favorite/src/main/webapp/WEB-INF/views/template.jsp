@@ -34,6 +34,7 @@
 	        <ul class="sidebar-nav" id="sidebar">
 	        	<sec:authorize access="isAnonymous()">
 	        		<li><a onclick="clkLogin()" href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
+	        		<li><a href="client/join">Sign In</a></li>
 	        	</sec:authorize>
 	        	<sec:authorize access="isAuthenticated()">
 	        		<li><a href="/youtube/logout">Logout</a></li>

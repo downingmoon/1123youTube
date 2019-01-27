@@ -9,6 +9,8 @@ public interface ClientMapper {
 	
 	public List<YoutubeVO> getList();
 	
+	public List<YoutubeVO> getMoreVideo(int page);
+	
 	public YoutubeVO getVideoDetail(int y_no);
 	
 	public void insertURL(YoutubeVO vo);

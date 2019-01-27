@@ -50,6 +50,10 @@ public class ClientService {
 		return mapper.getList();
 	}
 	
+	public List<YoutubeVO> getMoreVideo(int page) {
+		return mapper.getMoreVideo(page);
+	}
+	
 	
 	/*
 	 *  Get Detail
