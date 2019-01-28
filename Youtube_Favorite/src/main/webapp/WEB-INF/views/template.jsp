@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page import="org.springframework.security.core.Authentication"%>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	String username = auth.getName();
+%>
 <%
 	pageContext.setAttribute("cn", "\n");
 	pageContext.setAttribute("br", "<br>");
@@ -19,7 +25,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/res/css/login.css">
 <script src="${pageContext.request.contextPath}/res/js/navBar.js"></script>
 <script>
-
+function goToTop() {
+	var position = $('#top').offset().top;
+	$('html, body').animate({ scrollTop : position}, 800);
+}
 
 
 </script>
@@ -42,14 +51,14 @@
 	        	<li><a href="/youtube">Home
 	        		<span class="sub_icon glyphicon glyphicon-link"></span></a></li>     
 	        	<li><a href="/youtube/client/insertURL">URL 등록</a></li>
-	        	<li><a href="/youtube/client/insertGallary">이미지 업로드</a></li>
+	        	<!-- <li><a href="/youtube/client/insertGallary">이미지 업로드</a></li> -->
 	        </ul>
 	     </div>
 	     <div id="page-content-wrapper">
 	     	<div class="page-content inset">
 	        	<div class="row" id="row">
 	            	<div class="col-md-12">
-	            		<img style="width:100%;" alt="MainLogo" src="/youtube/res/img/mytube.png">
+	            		<img id="top"style="width:100%;" alt="MainLogo" src="/youtube/res/img/mytube.png">
 	              		<jsp:include page="${target}.jsp"/> 
 	              		<jsp:include page="default/footer.jsp"/>
 	            	</div>
@@ -68,7 +77,6 @@
 				<input class="form-control" type="password" id="password" name="password" maxlength="20" placeholder="비밀번호 입력">
 				<input class="login loginmodal-submit" type="submit" onclick="return loginFrm()" value="LOGIN" class="submitBtn">
 			</form>
-			<!-- <div class="login-help"><a href="forgotPw">비밀번호 찾기</a></div> -->
 		</div>
 	</div>
 </div>

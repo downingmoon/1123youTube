@@ -33,14 +33,6 @@ public class GallaryVO {
 		this.g_title = g_title;
 	}
 
-	public String getGtitle() {
-		return g_title;
-	}
-
-	public void setGtitle(String g_title) {
-		this.g_title = g_title;
-	}
-
 	public MultipartFile getImg() {
 		return img;
 	}

@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page import="org.springframework.security.core.Authentication"%>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%
+	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	String username = auth.getName();
+%>
 <script>
 $(document).ready(function () {
 	var page = 3;
@@ -26,27 +33,26 @@ $(document).ready(function () {
     			if(data != null && data != undefined && data != '' ) {
     				for(var i in data) {
         				console.log('y_no : '+data[i].y_no);
-        				//if(data[i].y_no != undefined || data[i].y_no != '' || data[i].y_no != null) {
-        					console.log('DIV name is testDiv'+(parseInt(page)+1));
-        					$(('#testDiv'+ page)).after(
-        							'<div id="testDiv'+(parseInt(page)+1)+ '">'
-                	    			+ '<div class="clearfix">'
-                	    			+ '<div class="col-md-12">'
-                	    			+ '<a href="/youtube/client/playVideo?y_no='+data[i].y_no+'">'+data[i].y_title+'</a>'
-                	    			+ '</div>'
-                	    			+ '<div class="col-md-10 col-sm-6 col-xs-12">'
-                	    			+ '<p>By : '+data[i].y_chname+'</p>'
-                	    			+ '</div>'
-                	    			+ '<div class="col-md-1 col-sm-6 hidden-xs">'
-                	    			+ '<button type="button" class="btn btn-danger" onclick="">삭제</button>'
-                	    			+ '</div>'
-                	    			+ '</div>'
-                	    			+ '<div class="iframe embed-responsive embed-responsive-16by9">'
-                	    			+ '<iframe style="width:100%;height:500px;" src="https://www.youtube.com/embed/'+data[i].y_url+'" allowfullscreen ></iframe>'
-                	    			+ '</div>'
-                	    			+ '<hr>'
-                	    			+ '</div>')
-            				page++;
+        				console.log('DIV name is testDiv'+(parseInt(page)+1));
+        				$(('#testDiv'+ page)).after(
+        						'<div id="testDiv'+(parseInt(page)+1)+ '">'
+                	    		+ '<div class="clearfix">'
+                	    		+ '<div class="col-md-12">'
+                	    		+ '<a href="/youtube/client/playVideo?y_no='+data[i].y_no+'">'+data[i].y_title+'</a>'
+                	    		+ '</div>'
+                	    		+ '<div class="col-md-10 col-sm-6 col-xs-12">'
+                	    		+ '<p>By : '+data[i].y_chname+'</p>'
+                	    		+ '</div>'
+                	    		+ '<div class="col-md-1 col-sm-6 hidden-xs">'
+                	    		+ '<button type="button" class="btn btn-danger" onclick="">삭제</button>'
+                	    		+ '</div>'
+                	    		+ '</div>'
+                	    		+ '<div class="iframe embed-responsive embed-responsive-16by9">'
+                	    		+ '<iframe style="width:100%;height:500px;" src="https://www.youtube.com/embed/'+data[i].y_url+'" allowfullscreen ></iframe>'
+                	    		+ '</div>'
+                	    		+ '<hr>'
+                	    		+ '</div>')
+            			page++;
         				}
         			console.log('page : ' + page);	
     			} else {
@@ -74,14 +80,17 @@ $(document).ready(function () {
 <div id="testDiv${i.count}">
 <div class="clearfix" id="clearDiv">
 	<div class="col-md-12">
-		<a href="${pageContext.request.contextPath}/client/playVideo?y_no=${item.y_no}">${item.y_title}</a>
+		<a href="${pageContext.request.contextPath}/client/playVideo?y_no=${item.y_no}&u_id=<%=username%>">${item.y_title}</a>
 	</div>
 	<div class="col-md-10 col-sm-6 col-xs-12">
 		<p>By : ${item.y_chname}</p>
 	</div>
-	<div class="col-md-1 col-sm-6 hidden-xs">
-		<button type="button" class="btn btn-danger" onclick="location.href='/youtube/admin/deleteVideo?y_no=${item.y_no}'">삭제</button> 
-	</div>
+	<sec:authorize access="hasRole('ROLE_ADM')">
+		<div class="col-md-1 col-sm-6 hidden-xs">
+			<button type="button" class="btn btn-danger" 
+				onclick="location.href='/youtube/admin/deleteVideo?y_no=${item.y_no}'">삭제</button> 
+		</div>
+	</sec:authorize>
 </div>
 <div class="iframe embed-responsive embed-responsive-16by9">
 	<iframe style="width:100%;height:500px;" src="https://www.youtube.com/embed/${item.y_url}" allowfullscreen ></iframe>

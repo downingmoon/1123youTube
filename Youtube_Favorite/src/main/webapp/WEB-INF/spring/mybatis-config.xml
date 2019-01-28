@@ -6,6 +6,7 @@
 	<typeAliases>
 		<typeAlias alias="UserVO" type="com.joy.youtube.model.UserVO"/>
 		<typeAlias alias="YoutubeVO" type="com.joy.youtube.model.YoutubeVO"/>
-		<!-- Mapper xml 파일에서 패키지 풀네임 적을필요 없이 userVO만 적어도됨 -->
+		<typeAlias alias="CommentVO" type="com.joy.youtube.model.CommentVO"/>
+		<typeAlias alias="GallaryVO" type="com.joy.youtube.model.GallaryVO"/>
 	</typeAliases>
 </configuration>

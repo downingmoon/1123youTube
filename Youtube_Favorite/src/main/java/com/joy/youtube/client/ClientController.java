@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.joy.youtube.model.CommentVO;
 import com.joy.youtube.model.GallaryVO;
 import com.joy.youtube.model.UserVO;
 import com.joy.youtube.model.YoutubeVO;
@@ -35,6 +35,27 @@ public class ClientController {
 		return list;
 	}
 	
+	@RequestMapping("commentAjax")
+	@ResponseBody
+	public void insertComment(int y_no, String c_content, String c_writer) {
+		System.out.println("y_no : " + y_no + "|| c_content : " + c_content + "|| c_writer : " + c_writer);
+		service.insertComment(y_no, c_content, c_writer);
+		
+	}
+	
+	@RequestMapping("authCheckAjax")
+	@ResponseBody
+	public boolean authCheck(String nick, int c_no, int y_no) {
+		boolean result = service.isYourComment(nick, y_no, c_no);
+		return result;
+	}
+	
+	@RequestMapping("deleteCommentAjax")
+	@ResponseBody
+	public void deleteComment(int y_no, int c_no) {
+		service.deleteComment(y_no, c_no);
+	}
+	
 	@RequestMapping("list")
 	public String list(Model model) {
 		List<YoutubeVO> list = service.getList();
@@ -44,12 +65,20 @@ public class ClientController {
 	}
 	
 	@RequestMapping("playVideo")
-	public String getVideoDetail(int y_no, Model m) {
+	public String getVideoDetail(int y_no, Model m, String u_id) {
+		System.out.println("uid : " + u_id);
 		YoutubeVO vo = service.getVideoDetail(y_no);
-		System.out.println("playVideo url : " + vo.getY_url());
-		System.out.println("playVideo title : " + vo.getY_title());
+		List<CommentVO> list = service.getComment(y_no);
+		int cnt = service.getCommentCount(y_no);
+		String nickname = service.getUserNickname(u_id);
+		System.out.println("nickname : " + nickname);
+		m.addAttribute("list", list);
+		m.addAttribute("count", cnt);
+		m.addAttribute("y_no", y_no);
 		m.addAttribute("vo",vo);
-		return "client/playVideo";
+		m.addAttribute("nick", nickname);
+		m.addAttribute("target","client/playVideo");
+		return "template";
 	}
 	
 	@RequestMapping("insertURL")
@@ -63,16 +92,17 @@ public class ClientController {
 		return "redirect:/client/list";
 	}
 	
-	@RequestMapping("insertGallary")
-	public String insertGallaryGet(Model m) {
-		m.addAttribute("target", "client/insertGallary");
-		return "template";
-	}
-	@RequestMapping(value="insertGallary", method=RequestMethod.POST)
-	public String insertGallaryPost(GallaryVO vo) {
-		service.insertGallary(vo);
-		return "admin/insertGallary";
-	}
+//	@RequestMapping("insertGallary")
+//	public String insertGallaryGet(Model m) {
+//		m.addAttribute("target", "client/insertGallary");
+//		return "template";
+//	}
+//	@RequestMapping(value="insertGallary", method=RequestMethod.POST)
+//	public String insertGallaryPost(GallaryVO vo, Model m) {
+//		service.insertGallary(vo);
+//		m.addAttribute("target", "client/galleryList");
+//		return "template";
+//	}
 	
 	@RequestMapping("join")
 	public String joinGet(Model m) {
@@ -84,7 +114,7 @@ public class ClientController {
 	public String joinPost(UserVO vo) {
 		System.out.println("joinPost / name : " + vo.getU_name());
 		service.join(vo);
-		return "redirect:loginForm";
+		return "redirect:/client/list";
 		
 	}
 	

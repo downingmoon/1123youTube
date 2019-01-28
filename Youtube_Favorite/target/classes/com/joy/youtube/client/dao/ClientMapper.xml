@@ -15,6 +15,35 @@
 		SELECT y_url, y_title FROM yf_youtube WHERE y_no = #{y_no}
 	</select>
 	
+	<select id="getComment" resultType="CommentVO">
+		SELECT c_no, c_writer, c_content, DATE_FORMAT(c_regdate, '%y.%m.%d') AS c_regdate
+		FROM yf_comment WHERE y_no = #{y_no} ORDER BY c_no
+	</select>
+	
+	<select id="getCommentCount" resultType="_int">
+		SELECT COUNT(*) FROM yf_comment WHERE y_no = #{y_no}
+	</select>
+	
+	<select id="isYourComment" resultType="String">
+		SELECT c_writer FROM yf_comment WHERE y_no = #{y_no} AND c_no = #{c_no}
+	</select>
+	
+	<delete id="deleteComment">
+		DELETE FROM yf_comment WHERE y_no = #{y_no} AND c_no = #{c_no}
+	</delete>
+	
+	<insert id="insertComment">
+		INSERT INTO yf_comment
+		(c_no, y_no, c_content, c_writer)
+		VALUES
+		((SELECT COALESCE(MAX(c_no), 0) + 1 FROM yf_comment a WHERE y_no = #{y_no})
+		, #{y_no}, #{c_content}, #{c_writer})
+	</insert>
+	
+	<select id="getUserNickname" resultType="String">
+		SELECT u_nickname FROM yf_user WHERE u_id = #{u_id}
+	</select>
+	
 	<insert id="insertURL" parameterType="YoutubeVO">
 		INSERT INTO YF_YOUTUBE
 		(y_url, y_title, y_chname)
